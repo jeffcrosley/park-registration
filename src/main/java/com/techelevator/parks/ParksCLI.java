@@ -1,10 +1,13 @@
 package com.techelevator.parks;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import com.techelevator.parks.model.CampgroundDAO;
+import com.techelevator.parks.model.Park;
 import com.techelevator.parks.model.ParkDAO;
 import com.techelevator.parks.model.ReservationDAO;
 import com.techelevator.parks.model.SiteDAO;
@@ -24,7 +27,7 @@ public class ParksCLI {
 	
 	public static void main(String[] args) {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/campground");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/parks");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres1");
 
@@ -37,10 +40,10 @@ public class ParksCLI {
 		campgroundDAO = new JDBCCampgroundDAO(datasource);
 		siteDAO = new JDBCSiteDAO(datasource);
 		reservationDAO = new JDBCReservationDAO(datasource);
-		
 	}
 
 	public void run() {
-
+		List<Park> parks = parkDAO.getAllParks();
+		Menu.displayAllParks(parks);
 	}
 }
