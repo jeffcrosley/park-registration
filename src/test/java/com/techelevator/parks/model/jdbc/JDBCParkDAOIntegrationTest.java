@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.techelevator.parks.model.Park;
 
@@ -39,7 +38,6 @@ public class JDBCParkDAOIntegrationTest extends DAOIntegrationTest {
 	private static final String TEST_PARK_3_DESCRIPTION = "It's like Jurassic Park, except it's Cretaceous";
 	
 	private JDBCParkDAO dao;
-	JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 	
 	private Park newPark(long id, String name, String location, LocalDate establishedDate, int area, int annualVisitors, String description) {
 		Park thePark = new Park();
@@ -77,6 +75,7 @@ public class JDBCParkDAOIntegrationTest extends DAOIntegrationTest {
 		jdbcTemplate.update(sqlInsertPark, TEST_PARK_1_ID, TEST_PARK_1_NAME, TEST_PARK_1_LOCATION, TEST_PARK_1_ESTABLISHED_DATE, TEST_PARK_1_AREA, TEST_PARK_1_ANNUAL_VISITORS, TEST_PARK_1_DESCRIPTION);
 		jdbcTemplate.update(sqlInsertPark, TEST_PARK_2_ID, TEST_PARK_2_NAME, TEST_PARK_2_LOCATION, TEST_PARK_2_ESTABLISHED_DATE, TEST_PARK_2_AREA, TEST_PARK_2_ANNUAL_VISITORS, TEST_PARK_2_DESCRIPTION);
 		jdbcTemplate.update(sqlInsertPark, TEST_PARK_3_ID, TEST_PARK_3_NAME, TEST_PARK_3_LOCATION, TEST_PARK_3_ESTABLISHED_DATE, TEST_PARK_3_AREA, TEST_PARK_3_ANNUAL_VISITORS, TEST_PARK_3_DESCRIPTION);
+		dao = new JDBCParkDAO(getDataSource());
 	}
 	
 	@Test
