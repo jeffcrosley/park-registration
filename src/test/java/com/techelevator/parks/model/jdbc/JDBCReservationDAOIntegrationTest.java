@@ -1,4 +1,4 @@
-package com.techelevator;
+package com.techelevator.parks.model.jdbc;
 
 import java.sql.SQLException;
 
@@ -9,7 +9,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-public abstract class DAOIntegrationTest {
+public abstract class JDBCReservationDAOIntegrationTest {
 
 	/* Using this particular implementation of DataSource so that
 	 * every database interaction is part of the same database
