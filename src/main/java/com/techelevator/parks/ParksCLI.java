@@ -104,6 +104,7 @@ public class ParksCLI {
 			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
 			// TODO JAKE: CREATE THIS METHOD; MAKE A toString OVERRIDE ON Campground;
 			// 	CREATE METHOD IN Display THAT PRINTS EACH Campground IN selectedPark
+			System.out.println(campgrounds.get(0));
 			Display.printCampgrounds(campgrounds);
 			
 			// GET CAMPGROUND MENU SELECTION
@@ -151,7 +152,7 @@ public class ParksCLI {
 		String reservationName = menu.getStringFromUserInput(Display.getReservationNamePrompt());
 		
 		// CREATE RESERVATION AND DISPLAY ID TO USER
-		// TODO JAKE: CREATE createReservation() METHOD IN JDBCreservationDAO
+		// TODO JAKE: CREATE createReservation() METHOD IN JDBCReservationDAO
 		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
 		// TODO: JEFF: TEST THIS
 		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);

@@ -75,7 +75,7 @@ public class Display {
     }
 	
 	public static void printCampgrounds(List<Campground> campgrounds) {
-		// TODO DEFINE THIS METHOD; FIX TOSTRING METHOD IN OBJECT
+		// TODO DEFINE THIS METHOD; FIX TOSTRING METHOD IN Campground
 	}
 	
 	public static List<String> getParkMenu() {
