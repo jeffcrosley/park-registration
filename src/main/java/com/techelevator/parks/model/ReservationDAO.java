@@ -1,5 +1,7 @@
 package com.techelevator.parks.model;
 
-public interface ReservationDAO {
+import java.util.Date;
 
+public interface ReservationDAO {
+	public Reservation createReservation(Site selectedSite, String reservationName, Date arrivalDate, Date departureDate);
 }
