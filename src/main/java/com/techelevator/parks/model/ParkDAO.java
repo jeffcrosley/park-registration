@@ -7,4 +7,3 @@ public interface ParkDAO {
 	public List<Park> getAllParks();
 	
 }
-

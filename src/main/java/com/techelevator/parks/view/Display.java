@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.techelevator.parks.model.Campground;
 import com.techelevator.parks.model.Park;
-import com.techelevator.parks.model.Site;
 
 public class Display {
 
@@ -85,6 +84,7 @@ public class Display {
 		output.add(PARK_MENU_2);
 		output.add(PARK_MENU_3);
 		return output;
+
 	}
 
 	public static List<String> getCampgroundMenu() {
@@ -94,3 +94,4 @@ public class Display {
 		return output;
 	}
 }
+
