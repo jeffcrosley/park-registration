@@ -1,6 +1,9 @@
 package com.techelevator.parks;
 
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.sql.DataSource;
 
@@ -19,7 +22,7 @@ import com.techelevator.parks.view.Menu;
 
 public class ParksCLI {
 
-	private Menu menu;
+	private Menu menu;	
 	private ParkDAO parkDAO;
 	private CampgroundDAO campgroundDAO;
 	private SiteDAO siteDAO;
@@ -43,7 +46,15 @@ public class ParksCLI {
 	}
 
 	public void run() {
+		
+		// INSTANTIATE MENU
+		menu = new Menu(System.in, System.out);
+		
+		// QUERY AND DISPLAY ALL PARKS TO USER
+		// TODO ADD A QUIT OPTION TO THIS FIRST MENU
 		List<Park> parks = parkDAO.getAllParks();
-		Menu.displayAllParks(parks);
+		
+		// SOLICIT USER FOR PARK
+		Park selectedPark = (Park) menu.getChoiceFromOptions(parks.toArray());
 	}
 }

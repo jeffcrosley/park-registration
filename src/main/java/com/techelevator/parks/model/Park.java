@@ -68,5 +68,10 @@ public class Park {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }
