@@ -1,5 +1,6 @@
 package com.techelevator.parks;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -10,7 +11,9 @@ import com.techelevator.parks.model.Campground;
 import com.techelevator.parks.model.CampgroundDAO;
 import com.techelevator.parks.model.Park;
 import com.techelevator.parks.model.ParkDAO;
+import com.techelevator.parks.model.Reservation;
 import com.techelevator.parks.model.ReservationDAO;
+import com.techelevator.parks.model.Site;
 import com.techelevator.parks.model.SiteDAO;
 import com.techelevator.parks.model.jdbc.JDBCCampgroundDAO;
 import com.techelevator.parks.model.jdbc.JDBCParkDAO;
@@ -74,28 +77,84 @@ public class ParksCLI {
 		
 	}		
 	
-	public void parkMenuLoop(Park selectedPark) {
+	private void parkMenuLoop(Park selectedPark) {
 		boolean parkMenuLoop = true;
 		do {
 			// DISPLAY PARK INFO
 			Display.printParkInfo(selectedPark);
 			
-			// GET USER CHOICE FROM PARK MENU
+			// GET PARK MENU SELECTION
 			String parkMenuSelection = (String) menu.getChoiceFromOptions(Display.getParkMenu().toArray());
 			
 			if (parkMenuSelection == Display.getParkMenu1()) {
 				campgroundMenuLoop(selectedPark);
 			} else if (parkMenuSelection == Display.getParkMenu2()) {
-				// TODO SEARCH FOR RESERVATION
-			} else if (parkMenuSelection == Display.getParkMenu3()) {
-				parkMenuLoop = false;
+				//TODO CREATE PARK-WIDE RESERVATION METHOD (BONUS)
 			} else {
-				// TODO ADD DEFAULT TO PROMPT USER FOR A VALID SELECTION
+				parkMenuLoop = false;
 			}
 		} while (parkMenuLoop);		
 	}
 	
-	public void campgroundMenuLoop(Park selectedPark) {
-		List<Campground> selectedParkCampgrounds = campgroundDAO.getCampgrounds(selectedPark);
+	private void campgroundMenuLoop(Park selectedPark) {
+		boolean campgroundMenuLoop = true;
+		do {
+			// DISPLAY CAMPGROUNDS
+			// TODO JEFF: INTEGRATION TEST
+			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
+			// TODO JAKE: CREATE THIS METHOD; MAKE A toString OVERRIDE ON Campground;
+			// 	CREATE METHOD IN Display THAT PRINTS EACH Campground IN selectedPark
+			Display.printCampgrounds(campgrounds);
+			
+			// GET CAMPGROUND MENU SELECTION
+			String campgroundMenuSelection = (String) menu.getChoiceFromOptions(Display.getCampgroundMenu().toArray());
+			
+			if (campgroundMenuSelection == Display.getCampgroundMenu1()) {
+				searchForAvailableReservation(campgrounds);
+			} else {
+				campgroundMenuLoop = false;
+			}
+		} while (campgroundMenuLoop);
+	}
+	
+	private void searchForAvailableReservation(List<Campground> campgrounds) {
+		
+		// GET CAMPGROUND SELECTION
+		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
+		
+		// GET ARRIVAL AND DEPARTURES DATES
+		Date arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
+		Date departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
+		
+		// CHECK FOR AVAILABLE SITES
+		// TODO JAKE: CREATE getAvailableSites() IN JDBCSiteDAO
+		//	Note: Limit this to 5 (by id ASC)
+		// 	Note: The total cost will have to be derived from the Campground rate and the dates
+		// TODO JEFF: INTEGRATION TEST
+		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
+		
+		if (availableSites.size() == 0) {
+			// TODO RE-PROMPT IF THERE ARE NO AVAILABLE SITES; WILL PROBABLY NEED TO WRAP THE ABOVE CODE IN A WHILE LOOP
+		} else {
+			makeReservation(availableSites, arrivalDate, departureDate);
+		}
+	}
+	
+	private void makeReservation(List<Site> availableSites, Date arrivalDate, Date departureDate) {
+		
+		// GET SITE SELECTION
+		// TODO FIX toString ON Site SO THIS ALL FORMATS CORRECTLY
+		// TODO FIX menu SO IT TAKES/DISPLAYS A VARIABLE PROMPT, DEPENDING ON CONTEXT
+		Site selectedSite = (Site) menu.getChoiceFromOptions(availableSites.toArray());
+		
+		// GET RESERVATION NAME
+		String reservationName = menu.getStringFromUserInput(Display.getReservationNamePrompt());
+		
+		// CREATE RESERVATION AND DISPLAY ID TO USER
+		// TODO JAKE: CREATE createReservation() METHOD IN JDBCreservationDAO
+		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
+		// TODO: JEFF: TEST THIS
+		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
+		 System.out.println(Display.getReservationMade() + reservation.getId());
 	}
 }

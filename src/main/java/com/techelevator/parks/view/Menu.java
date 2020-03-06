@@ -3,19 +3,17 @@ package com.techelevator.parks.view;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Menu {
-		
-	// RELIES ON FOO.TOSTRING FOR PRINT
-	// TODO OVERRIDE TOSTRING ON ALL RELEVANT CLASSES TO RETURN NAME OF IT (HOWEVER YOU WANT)
-	// PUT IN ARRAY OF FOO, GET BACK A FOO
-	// OUTPUT MUST BE CAST AS A (FOO)
-	// Foo chosenItem = (Foo) getChoiceFromOptions(fooArray);
-	// CHECK RETURN VALUES FOR NULL
 	
 	private PrintWriter out;
 	private Scanner in;
+	
+	private static final String DATE_FORMAT = "MM/dd/yyyy";
 
 	public Menu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
@@ -30,7 +28,33 @@ public class Menu {
 		}
 		return choice;
 	}
-
+	
+	public Date getDateFromUserInput(String prompt) {
+		Date output = null;
+		
+		System.out.println(prompt);
+		
+		String userInput = in.nextLine();
+		
+		try {
+			output = new SimpleDateFormat(DATE_FORMAT).parse(userInput);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return output;
+	}
+	
+	public String getStringFromUserInput(String prompt) {
+		
+		System.out.println(prompt);
+		
+		String output = in.nextLine();
+		
+		return output;
+	}
+	
 	private Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
 		String userInput = in.nextLine();
