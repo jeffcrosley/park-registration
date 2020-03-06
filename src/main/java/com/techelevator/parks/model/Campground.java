@@ -70,4 +70,7 @@ public class Campground {
     public void setFee(BigDecimal fee) {
         this.fee = fee;
     }
+    public String toString() {
+        return campgroundId + "\t" + name + "\t" + openDate + "\t" + closeDate + "\t" + fee;
+    }
 }

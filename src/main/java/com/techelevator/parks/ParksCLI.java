@@ -102,6 +102,11 @@ public class ParksCLI {
 			// DISPLAY CAMPGROUNDS
 			// TODO JEFF: INTEGRATION TEST
 			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
+			
+			for (Campground grounds : campgrounds) {
+				System.out.println(grounds);
+			}			
+			
 			// TODO JAKE: CREATE THIS METHOD; MAKE A toString OVERRIDE ON Campground;
 			// 	CREATE METHOD IN Display THAT PRINTS EACH Campground IN selectedPark
 			Display.printCampgrounds(campgrounds);
