@@ -1,8 +1,8 @@
 package com.techelevator.parks.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SiteDAO {
-	public List<Site> getAvailableSites(Campground selectedCampground, Date desiredArrivalDate, Date desiredDepartureDate);
+	public List<Site> getAvailableSites(Campground selectedCampground, LocalDate desiredArrivalDate, LocalDate desiredDepartureDate);
 }

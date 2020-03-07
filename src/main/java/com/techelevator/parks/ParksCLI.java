@@ -1,5 +1,6 @@
 package com.techelevator.parks;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -100,15 +101,7 @@ public class ParksCLI {
 		boolean campgroundMenuLoop = true;
 		do {
 			// DISPLAY CAMPGROUNDS
-			// TODO JEFF: INTEGRATION TEST
 			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
-			
-			for (Campground grounds : campgrounds) {
-				System.out.println(grounds);
-			}			
-			
-			// TODO JAKE: CREATE THIS METHOD; MAKE A toString OVERRIDE ON Campground;
-			// 	CREATE METHOD IN Display THAT PRINTS EACH Campground IN selectedPark
 			Display.printCampgrounds(campgrounds);
 			
 			// GET CAMPGROUND MENU SELECTION
@@ -128,8 +121,8 @@ public class ParksCLI {
 		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
 		
 		// GET ARRIVAL AND DEPARTURES DATES
-		Date arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
-		Date departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
+		LocalDate arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
+		LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
 		
 		// CHECK FOR AVAILABLE SITES
 		// TODO JAKE: CREATE getAvailableSites() IN JDBCSiteDAO
@@ -145,7 +138,7 @@ public class ParksCLI {
 		}
 	}
 	
-	private void makeReservation(List<Site> availableSites, Date arrivalDate, Date departureDate) {
+	private void makeReservation(List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
 		
 		// GET SITE SELECTION
 		// TODO FIX toString ON Site SO THIS ALL FORMATS CORRECTLY
@@ -156,9 +149,9 @@ public class ParksCLI {
 		String reservationName = menu.getStringFromUserInput(Display.getReservationNamePrompt());
 		
 		// CREATE RESERVATION AND DISPLAY ID TO USER
-		// TODO JAKE: CREATE createReservation() METHOD IN JDBCreservationDAO
+		// TODO JAKE: CREATE createReservation() METHOD IN JDBCReservationDAO
 		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
-		// TODO: JEFF: TEST THIS
+		// TODO: JEFF: INTEGRATION TEST
 		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
 		 System.out.println(Display.getReservationMade() + reservation.getId());
 	}

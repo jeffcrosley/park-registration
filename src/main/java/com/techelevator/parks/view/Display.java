@@ -75,7 +75,9 @@ public class Display {
     }
 	
 	public static void printCampgrounds(List<Campground> campgrounds) {
-		// TODO DEFINE THIS METHOD; FIX TOSTRING METHOD IN OBJECT
+		for (Campground grounds : campgrounds) {
+			System.out.println(grounds);
+		}
 	}
 	
 	public static List<String> getParkMenu() {
