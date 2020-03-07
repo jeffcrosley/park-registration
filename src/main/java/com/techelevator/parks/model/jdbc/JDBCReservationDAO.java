@@ -1,6 +1,6 @@
 package com.techelevator.parks.model.jdbc;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.sql.DataSource;
 
@@ -23,8 +23,8 @@ public class JDBCReservationDAO implements ReservationDAO {
 	}
 	
 	@Override
-	public Reservation createReservation(Site selectedSite, String reservationName, Date arrivalDate,
-			Date departureDate) {
+	public Reservation createReservation(Site selectedSite, String reservationName, LocalDate arrivalDate,
+			LocalDate departureDate) {
 		String searchForReservation = "SELECT * FROM site where " + 
 				"campground_id = ? AND " + 
 				"site_id NOT IN " + 
