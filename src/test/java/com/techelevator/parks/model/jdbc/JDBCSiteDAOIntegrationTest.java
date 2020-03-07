@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -167,8 +166,6 @@ public class JDBCSiteDAOIntegrationTest extends DAOIntegrationTest {
 			jdbcTemplate.update(sqlInsertReservation, TEST_RESERVATION_1_ID, TEST_SITE_5_ID, TEST_RESERVATION_1_NAME, TEST_RESERVATION_1_FROM_DATE, TEST_RESERVATION_1_TO_DATE, TEST_RESERVATION_1_CREATE_DATE);
 			dao = new JDBCSiteDAO(getDataSource());
 		}		
-		
-//		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
 
 		@Test
 		public void return_available_sites() {

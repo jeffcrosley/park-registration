@@ -1,7 +1,6 @@
 package com.techelevator.parks;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -57,6 +56,7 @@ public class ParksCLI {
 		// QUERY AND DISPLAY ALL PARKS TO USER
 		boolean mainLoop = true;
 		do {
+			Display.printSelectParkPrompt();
 			List<Park> parks = parkDAO.getAllParks();
 			Park quit = new Park();
 			String quitProgram = "Quit Program";
@@ -128,7 +128,6 @@ public class ParksCLI {
 		// TODO JAKE: CREATE getAvailableSites() IN JDBCSiteDAO
 		//	Note: Limit this to 5 (by id ASC)
 		// 	Note: The total cost will have to be derived from the Campground rate and the dates
-		// TODO JEFF: INTEGRATION TEST
 		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
 		
 		if (availableSites.size() == 0) {
@@ -151,7 +150,6 @@ public class ParksCLI {
 		// CREATE RESERVATION AND DISPLAY ID TO USER
 		// TODO JAKE: CREATE createReservation() METHOD IN JDBCReservationDAO
 		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
-		// TODO: JEFF: INTEGRATION TEST
 		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
 		 System.out.println(Display.getReservationMade() + reservation.getId());
 	}

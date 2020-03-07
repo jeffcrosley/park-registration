@@ -44,9 +44,8 @@ public class Park {
 		this.establishedDate = establishedDate;
 	}
 	
-	// RETURN STATEMENT SHOULD BE IN STRING FORMAT, SPECIFYING TO THE USER THAT THIS IS IN SQ KM
-	public String getArea() {
-		return String.valueOf(area) + " sq km";
+	public int getArea() {
+		return area;
 	}
 	
 	public void setArea(int area) {

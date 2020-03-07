@@ -1,14 +1,18 @@
 package com.techelevator.parks.view;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.techelevator.parks.model.Campground;
 import com.techelevator.parks.model.Park;
 
 public class Display {
 
-	private static final String divider = "------------------------------------------------------------";
+	private static final String DIVIDER = "------------------------------------------------------------------------------------------------------------------------";
+	
+	private static final String SELECT_PARK_PROMPT = "Select a Park for Further Details";
 	
 	private static final String PARK_MENU_1 = "View Campgrounds";
 	private static final String PARK_MENU_2 = "Search for Reservation";
@@ -25,7 +29,7 @@ public class Display {
 	private static final String RESERVATION_MADE = "The reservation has been made and the confirmation id is ";
 	
 	public static String getDivider() {
-		return divider;
+		return DIVIDER;
 	}
 
 	public static String getParkMenu1() {
@@ -63,15 +67,43 @@ public class Display {
 	public static String getReservationMade() {
 		return RESERVATION_MADE;
 	}
+	
+	public static void printSelectParkPrompt() {
+		System.out.println(SELECT_PARK_PROMPT);
+	}
 
+	private static String formatTextForConsole(String text) {
+		String output = "";
+		final int WORDS_PER_LINE = 10;
+		String[] arr = text.split(" ");
+		String[] line = new String[WORDS_PER_LINE];
+		int wordCounter = 0;
+			
+		for (int i = 0; i < arr.length; i++) {
+			line[wordCounter] = arr[i];
+			wordCounter++;
+			if (wordCounter == WORDS_PER_LINE || i == arr.length - 1) {
+				output += String.join(" ", line);
+				output += "\n";
+				wordCounter = 0;
+				for (int j = 0; j < WORDS_PER_LINE; j++) {
+					line[j] = "";
+				}
+			}
+		}
+		
+		return output;
+	}
+	
 	public static void printParkInfo(Park selectedPark) {
-		// TODO FORMAT THIS
-        System.out.println(selectedPark.getName());
-        System.out.println(selectedPark.getLocation());
-        System.out.println(selectedPark.getEstablishedDate());
-        System.out.println(selectedPark.getArea());
-        System.out.println(selectedPark.getAnnualVisitors());
-        System.out.println(selectedPark.getDescription());
+		System.out.println(DIVIDER + "\n");
+        System.out.println(selectedPark.getName() + " National Park");
+        System.out.println("Location: \t\t" + selectedPark.getLocation());
+        System.out.println("Established: \t\t" + selectedPark.getEstablishedDate());
+        System.out.println("Area: \t\t\t" + NumberFormat.getNumberInstance(Locale.US).format(selectedPark.getArea()) + " sq km");
+        System.out.println("Annual Visitors: \t" + NumberFormat.getNumberInstance(Locale.US).format(selectedPark.getAnnualVisitors()));
+        System.out.println("\n" + formatTextForConsole(selectedPark.getDescription()));
+        System.out.println(DIVIDER);
     }
 	
 	public static void printCampgrounds(List<Campground> campgrounds) {
