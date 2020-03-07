@@ -1,6 +1,6 @@
 package com.techelevator.parks.model.jdbc;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -20,12 +20,18 @@ public class JDBCSiteDAO implements SiteDAO {
 	}
 
 	@Override
-	public List<Site> getAvailableSites(Campground selectedCampground, Date desiredArrivalDate,
-			Date desiredDepartureDate) {
+	public List<Site> getAvailableSites(Campground selectedCampground, LocalDate desiredArrivalDate,
+			LocalDate desiredDepartureDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	private String convertDateToMonthNumber(LocalDate date) {
+		
+		String output = date.getMonth().toString();
+		
+		return output;
+		
+	}
 
 }

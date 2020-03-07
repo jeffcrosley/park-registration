@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -29,15 +31,15 @@ public class Menu {
 		return choice;
 	}
 	
-	public Date getDateFromUserInput(String prompt) {
-		Date output = null;
+	public LocalDate getDateFromUserInput(String prompt) {
+		LocalDate output = null;
 		
 		System.out.println(prompt);
 		
 		String userInput = in.nextLine();
 		
 		try {
-			output = new SimpleDateFormat(DATE_FORMAT).parse(userInput);
+			output = new SimpleDateFormat(DATE_FORMAT).parse(userInput).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

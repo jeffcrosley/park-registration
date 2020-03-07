@@ -1,5 +1,6 @@
 package com.techelevator.parks;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -120,8 +121,8 @@ public class ParksCLI {
 		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
 		
 		// GET ARRIVAL AND DEPARTURES DATES
-		Date arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
-		Date departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
+		LocalDate arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
+		LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
 		
 		// CHECK FOR AVAILABLE SITES
 		// TODO JAKE: CREATE getAvailableSites() IN JDBCSiteDAO
@@ -137,7 +138,7 @@ public class ParksCLI {
 		}
 	}
 	
-	private void makeReservation(List<Site> availableSites, Date arrivalDate, Date departureDate) {
+	private void makeReservation(List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
 		
 		// GET SITE SELECTION
 		// TODO FIX toString ON Site SO THIS ALL FORMATS CORRECTLY

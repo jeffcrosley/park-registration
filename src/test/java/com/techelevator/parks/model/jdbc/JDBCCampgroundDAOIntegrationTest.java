@@ -69,8 +69,7 @@ private JDBCCampgroundDAO dao;
 		theCampground.setName(name);
 		theCampground.setOpenDate(openDate);
 		theCampground.setCloseDate(closeDate);
-		theCampground.setFee(fee);
-		
+		theCampground.setFee(fee);		
 		return theCampground;
 	}
 	
