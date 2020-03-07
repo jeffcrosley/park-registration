@@ -25,8 +25,13 @@ public class JDBCReservationDAO implements ReservationDAO {
 	@Override
 	public Reservation createReservation(Site selectedSite, String reservationName, LocalDate arrivalDate,
 			LocalDate departureDate) {
+
 				return null;
-	
+	}
+
+
+
+
 
 	}
-}
+

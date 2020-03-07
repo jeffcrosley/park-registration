@@ -67,7 +67,30 @@ public class JDBCSiteDAOIntegrationTest extends DAOIntegrationTest {
 	private static final boolean TEST_SITE_3_IS_ACCESSIBLE = true;
 	private static final long TEST_SITE_3_MAX_RV_LENGTH = 333300;
 	private static final boolean TEST_SITE_3_HAS_UTILITIES = true;
+	private static final long TEST_SITE_4_ID = 4000000;
+	private static final long TEST_SITE_4_NUMBER = 440000;
+	private static final long TEST_SITE_4_MAX_OCCUPANCY = 444000;
+	private static final boolean TEST_SITE_4_IS_ACCESSIBLE = false;
+	private static final long TEST_SITE_4_MAX_RV_LENGTH = 444400;
+	private static final boolean TEST_SITE_4_HAS_UTILITIES = false;
+	private static final long TEST_SITE_5_ID = 5000000;
+	private static final long TEST_SITE_5_NUMBER = 550000;
+	private static final long TEST_SITE_5_MAX_OCCUPANCY = 555000;
+	private static final boolean TEST_SITE_5_IS_ACCESSIBLE = true;
+	private static final long TEST_SITE_5_MAX_RV_LENGTH = 555500;
+	private static final boolean TEST_SITE_5_HAS_UTILITIES = true;
+	private static final long TEST_SITE_6_ID = 6000000;
+	private static final long TEST_SITE_6_NUMBER = 660000;
+	private static final long TEST_SITE_6_MAX_OCCUPANCY = 666000;
+	private static final boolean TEST_SITE_6_IS_ACCESSIBLE = false;
+	private static final long TEST_SITE_6_MAX_RV_LENGTH = 666600;
+	private static final boolean TEST_SITE_6_HAS_UTILITIES = false;
 
+	private static final long TEST_RESERVATION_1_ID = 1000000;
+	private static final String TEST_RESERVATION_1_NAME = "Test Reservation";
+	private static final LocalDate TEST_RESERVATION_1_FROM_DATE = LocalDate.of(2020, Month.APRIL, 15);
+	private static final LocalDate TEST_RESERVATION_1_TO_DATE = LocalDate.of(2020, Month.JULY, 15);
+	private static final LocalDate TEST_RESERVATION_1_CREATE_DATE = LocalDate.of(2019, Month.DECEMBER, 15);
 		
 	private JDBCSiteDAO dao;
 		
@@ -121,6 +144,7 @@ public class JDBCSiteDAOIntegrationTest extends DAOIntegrationTest {
 			String sqlInsertPark = "INSERT INTO park (park_id, name, location, establish_date, area, visitors, description) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			String sqlInsertCampground = "INSERT INTO campground (campground_id, park_id, name, open_from_mm, open_to_mm, daily_fee) VALUES (?, ?, ?, ?, ?, ?)";
 			String sqlInsertSite = "INSERT INTO site (site_id, campground_id, site_number, max_occupancy, accessible, max_rv_length, utilities) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String sqlInsertReservation = "INSERT INTO reservation (reservation_id, site_id, name, from_date, to_date, create_date) VALUES (?, ?, ?, ?, ?, ?)";
 			String sqlDeleteReservations = "DELETE FROM reservation";
 			String sqlDeleteSites = "DELETE FROM site";
 			String sqlDeleteCampgrounds = "DELETE FROM campground";
@@ -137,6 +161,10 @@ public class JDBCSiteDAOIntegrationTest extends DAOIntegrationTest {
 			jdbcTemplate.update(sqlInsertSite, TEST_SITE_1_ID, TEST_CAMPGROUND_1_ID, TEST_SITE_1_NUMBER, TEST_SITE_1_MAX_OCCUPANCY, TEST_SITE_1_IS_ACCESSIBLE, TEST_SITE_1_MAX_RV_LENGTH, TEST_SITE_1_HAS_UTILITIES); 
 			jdbcTemplate.update(sqlInsertSite, TEST_SITE_2_ID, TEST_CAMPGROUND_1_ID, TEST_SITE_2_NUMBER, TEST_SITE_2_MAX_OCCUPANCY, TEST_SITE_2_IS_ACCESSIBLE, TEST_SITE_2_MAX_RV_LENGTH, TEST_SITE_2_HAS_UTILITIES); 
 			jdbcTemplate.update(sqlInsertSite, TEST_SITE_3_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_3_NUMBER, TEST_SITE_3_MAX_OCCUPANCY, TEST_SITE_3_IS_ACCESSIBLE, TEST_SITE_3_MAX_RV_LENGTH, TEST_SITE_3_HAS_UTILITIES); 
+			jdbcTemplate.update(sqlInsertSite, TEST_SITE_4_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_4_NUMBER, TEST_SITE_4_MAX_OCCUPANCY, TEST_SITE_4_IS_ACCESSIBLE, TEST_SITE_4_MAX_RV_LENGTH, TEST_SITE_4_HAS_UTILITIES); 
+			jdbcTemplate.update(sqlInsertSite, TEST_SITE_5_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_5_NUMBER, TEST_SITE_5_MAX_OCCUPANCY, TEST_SITE_5_IS_ACCESSIBLE, TEST_SITE_5_MAX_RV_LENGTH, TEST_SITE_5_HAS_UTILITIES); 
+			jdbcTemplate.update(sqlInsertSite, TEST_SITE_6_ID, TEST_CAMPGROUND_3_ID, TEST_SITE_6_NUMBER, TEST_SITE_6_MAX_OCCUPANCY, TEST_SITE_6_IS_ACCESSIBLE, TEST_SITE_6_MAX_RV_LENGTH, TEST_SITE_6_HAS_UTILITIES);
+			jdbcTemplate.update(sqlInsertReservation, TEST_RESERVATION_1_ID, TEST_SITE_5_ID, TEST_RESERVATION_1_NAME, TEST_RESERVATION_1_FROM_DATE, TEST_RESERVATION_1_TO_DATE, TEST_RESERVATION_1_CREATE_DATE);
 			dao = new JDBCSiteDAO(getDataSource());
 		}		
 		
@@ -145,22 +173,19 @@ public class JDBCSiteDAOIntegrationTest extends DAOIntegrationTest {
 		@Test
 		public void return_available_sites() {
 			
-			Campground campground1 = newCampground(TEST_CAMPGROUND_1_ID, TEST_PARK_1_ID, TEST_CAMPGROUND_1_NAME, TEST_CAMPGROUND_1_OPEN_DATE, TEST_CAMPGROUND_1_CLOSE_DATE, TEST_CAMPGROUND_1_FEE);
+			Campground campground2 = newCampground(TEST_CAMPGROUND_2_ID, TEST_PARK_2_ID, TEST_CAMPGROUND_2_NAME, TEST_CAMPGROUND_2_OPEN_DATE, TEST_CAMPGROUND_2_CLOSE_DATE, TEST_CAMPGROUND_2_FEE);
+			Site site3 = newSite(TEST_SITE_3_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_3_NUMBER, TEST_SITE_3_MAX_OCCUPANCY, TEST_SITE_3_IS_ACCESSIBLE, TEST_SITE_3_MAX_RV_LENGTH, TEST_SITE_3_HAS_UTILITIES);
+			Site site4 = newSite(TEST_SITE_4_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_4_NUMBER, TEST_SITE_4_MAX_OCCUPANCY, TEST_SITE_4_IS_ACCESSIBLE, TEST_SITE_4_MAX_RV_LENGTH, TEST_SITE_4_HAS_UTILITIES);
+			
 			final LocalDate DESIRED_ARRIVAL_DATE = LocalDate.of(2020, Month.MAY, 15);
 			final LocalDate DESIRED_DEPARTURE_DATE = LocalDate.of(2020, Month.SEPTEMBER, 15);
-			List<Site> actual = dao.getAvailableSites(campground1, DESIRED_ARRIVAL_DATE, DESIRED_DEPARTURE_DATE);
-
-//			Park park2 = newPark(TEST_PARK_2_ID, TEST_PARK_2_NAME, TEST_PARK_2_LOCATION, TEST_PARK_2_ESTABLISHED_DATE, TEST_PARK_2_AREA, TEST_PARK_2_ANNUAL_VISITORS, TEST_PARK_2_DESCRIPTION);
-//			Campground campground2 = newCampground(TEST_CAMPGROUND_2_ID, TEST_PARK_2_ID, TEST_CAMPGROUND_2_NAME, TEST_CAMPGROUND_2_OPEN_DATE, TEST_CAMPGROUND_2_CLOSE_DATE, TEST_CAMPGROUND_2_FEE);
-//			Campground campground3 = newCampground(TEST_CAMPGROUND_3_ID, TEST_PARK_2_ID, TEST_CAMPGROUND_3_NAME, TEST_CAMPGROUND_3_OPEN_DATE, TEST_CAMPGROUND_3_CLOSE_DATE, TEST_CAMPGROUND_3_FEE);
-//			
-//			List<Campground> actual = dao.getAllCampgrounds(park2);
-//			
-//			assertEquals(2, actual.size());
-//			
-//			assertCampgroundsAreEqual(campground2, actual.get(0));
-//			assertCampgroundsAreEqual(campground3, actual.get(1));
 			
+			List<Site> actual = dao.getAvailableSites(campground2, DESIRED_ARRIVAL_DATE, DESIRED_DEPARTURE_DATE);
+
+			assertEquals(2, actual.size());
+			assertSitesAreEqual(site3, actual.get(0));
+			assertSitesAreEqual(site4, actual.get(1));
+	
 		}
 
 
