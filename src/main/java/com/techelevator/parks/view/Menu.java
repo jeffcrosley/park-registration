@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Menu {
@@ -75,10 +74,9 @@ public class Menu {
 	}
 
 	private void displayMenuOptions(Object[] options) {
-		out.println();
 		for(int i = 0; i < options.length; i++) {
 			int optionNum = i+1;
-			out.println(optionNum+") "+options[i]);
+			out.println("\t"+optionNum+") "+options[i]);
 		}
 		out.print("\nPlease choose an option >>> ");
 		out.flush();

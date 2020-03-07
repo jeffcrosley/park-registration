@@ -29,7 +29,8 @@ public class JDBCSiteDAO implements SiteDAO {
 				"WHERE reservation.from_date BETWEEN ? AND ? " + 
 				"OR reservation.to_date BETWEEN ? AND ? " + 
 				"OR ? BETWEEN reservation.from_date AND reservation.to_date " + 
-				"OR ? BETWEEN reservation.from_date AND reservation.to_date)";
+				"OR ? BETWEEN reservation.from_date AND reservation.to_date) " +
+				"LIMIT 5";
 	
 	@Override
 	public List<Site> getAvailableSites(Campground selectedCampground, LocalDate desiredArrivalDate, LocalDate desiredDepartureDate) {

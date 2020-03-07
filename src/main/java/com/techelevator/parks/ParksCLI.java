@@ -56,7 +56,6 @@ public class ParksCLI {
 		// QUERY AND DISPLAY ALL PARKS TO USER
 		boolean mainLoop = true;
 		do {
-			Display.printSelectParkPrompt();
 			List<Park> parks = parkDAO.getAllParks();
 			Park quit = new Park();
 			String quitProgram = "Quit Program";
@@ -64,6 +63,7 @@ public class ParksCLI {
 			parks.add(quit);
 			
 			// SOLICIT USER FOR PARK (OR QUIT)
+			System.out.println(Display.getSelectParkPrompt());
 			Park selectedPark = (Park) menu.getChoiceFromOptions(parks.toArray());
 			
 			// TEST FOR QUIT CONDITION AND END PROGRAM IF TRUE
@@ -85,6 +85,7 @@ public class ParksCLI {
 			Display.printParkInfo(selectedPark);
 			
 			// GET PARK MENU SELECTION
+			System.out.println(Display.getSelectCommandPrompt());
 			String parkMenuSelection = (String) menu.getChoiceFromOptions(Display.getParkMenu().toArray());
 			
 			if (parkMenuSelection == Display.getParkMenu1()) {
@@ -94,13 +95,14 @@ public class ParksCLI {
 			} else {
 				parkMenuLoop = false;
 			}
-		} while (parkMenuLoop);		
+		} while (parkMenuLoop);
 	}
 	
 	private void campgroundMenuLoop(Park selectedPark) {
 		boolean campgroundMenuLoop = true;
-		do {
+		do {			
 			// DISPLAY CAMPGROUNDS
+			// TODO FIX THE FORMATTING ON THIS; NEEDS TO WORK FOR ALL PARKS
 			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
 			Display.printCampgrounds(campgrounds);
 			
@@ -125,7 +127,6 @@ public class ParksCLI {
 		LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
 		
 		// CHECK FOR AVAILABLE SITES
-		// TODO JAKE: CREATE getAvailableSites() IN JDBCSiteDAO
 		//	Note: Limit this to 5 (by id ASC)
 		// 	Note: The total cost will have to be derived from the Campground rate and the dates
 		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
@@ -141,7 +142,6 @@ public class ParksCLI {
 		
 		// GET SITE SELECTION
 		// TODO FIX toString ON Site SO THIS ALL FORMATS CORRECTLY
-		// TODO FIX menu SO IT TAKES/DISPLAYS A VARIABLE PROMPT, DEPENDING ON CONTEXT
 		Site selectedSite = (Site) menu.getChoiceFromOptions(availableSites.toArray());
 		
 		// GET RESERVATION NAME

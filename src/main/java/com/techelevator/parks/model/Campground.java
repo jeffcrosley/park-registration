@@ -1,6 +1,7 @@
 package com.techelevator.parks.model;
 
 import java.math.BigDecimal;
+import java.text.DateFormatSymbols;
 
 public class Campground {
 	
@@ -45,32 +46,44 @@ public class Campground {
         return openDate;
     }
 
-
     public void setOpenDate(String openDate) {
         this.openDate = Integer.parseInt(openDate);
                 
     }
 
-
     public int getCloseDate() {
         return closeDate;
     }
-
 
     public void setCloseDate(String closeDate) {
         this.closeDate = Integer.parseInt(closeDate);
     }
 
-
     public BigDecimal getFee() {
         return fee;
     }
 
-
     public void setFee(BigDecimal fee) {
         this.fee = fee;
     }
+    
+    private String getMonth(int month) {
+    	return new DateFormatSymbols().getMonths()[month-1];
+    }
+    
     public String toString() {
-        return campgroundId + "\t" + name + "\t" + openDate + "\t" + closeDate + "\t" + fee;
+    	String tabsAfterName = "\t";
+    	String tabsAfterOpenMonth = "\t";
+    	String tabsAfterCloseMonth = "\t";
+    	if (getName().length() < 10) {
+    		tabsAfterName += "\t";
+    	}
+    	if (getMonth(getOpenDate()).length() < 8) {
+    		tabsAfterOpenMonth += "\t";
+    	}
+    	if (getMonth(getCloseDate()).length() < 8) {
+    		tabsAfterCloseMonth += "\t";
+    	}
+        return getCampgroundId() + "\t" + getName() + tabsAfterName + getMonth(getOpenDate()) + tabsAfterOpenMonth + getMonth(getCloseDate()) + tabsAfterCloseMonth + "$" + getFee().toString() + "0";
     }
 }

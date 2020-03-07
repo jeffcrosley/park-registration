@@ -10,9 +10,12 @@ import com.techelevator.parks.model.Park;
 
 public class Display {
 
-	private static final String DIVIDER = "------------------------------------------------------------------------------------------------------------------------";
+	private static final String DIVIDER = "------------------------------------------------------------------------------------------------------------------------\n";
 	
-	private static final String SELECT_PARK_PROMPT = "Select a Park for Further Details";
+	private static final String SELECT_PARK_PROMPT = "Select a Park for Further Details\n";
+	private static final String SELECT_COMMAND_PROMPT = "Select a Command\n";
+	
+	private static final String CAMPGROUNDS_HEADER = "\tName\t\tOpen\t\tClose\t\tDaily Fee";
 	
 	private static final String PARK_MENU_1 = "View Campgrounds";
 	private static final String PARK_MENU_2 = "Search for Reservation";
@@ -20,7 +23,8 @@ public class Display {
 
 	private static final String CAMPGROUND_MENU_1 = "Search for Available Reservations";
 	private static final String CAMPGROUND_MENU_2 = "Return to Previous Screen";
-		
+
+
 	private static final String ARRIVAL_DATE_PROMPT = "What is the arrival date? _/_/__";
 	private static final String DEPARTURE_DATE_PROMPT = "What is the departure date? _/_/__";
 
@@ -67,10 +71,15 @@ public class Display {
 	public static String getReservationMade() {
 		return RESERVATION_MADE;
 	}
+
 	
-	public static void printSelectParkPrompt() {
-		System.out.println(SELECT_PARK_PROMPT);
+	public static String getSelectParkPrompt() {
+		return SELECT_PARK_PROMPT;
 	}
+	
+	public static String getSelectCommandPrompt() {
+		return SELECT_COMMAND_PROMPT;
+}
 
 	private static String formatTextForConsole(String text) {
 		String output = "";
@@ -107,9 +116,12 @@ public class Display {
     }
 	
 	public static void printCampgrounds(List<Campground> campgrounds) {
+		System.out.println(DIVIDER);
+		System.out.println(CAMPGROUNDS_HEADER);
 		for (Campground grounds : campgrounds) {
 			System.out.println(grounds);
 		}
+		System.out.println("\n" + DIVIDER);
 	}
 	
 	public static List<String> getParkMenu() {

@@ -53,4 +53,7 @@ public class Site {
 		this.hasUtilities = hasUtilities;
 	}
 
+	public String toString() {
+		return getId() + "\t" + getMaxOccupancy() + "\t" + isAccessible() + "\t" + getMaxRVLength() + "\t" + isHasUtilities();
+    }
 }
