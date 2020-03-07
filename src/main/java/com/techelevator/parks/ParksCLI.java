@@ -150,7 +150,7 @@ public class ParksCLI {
 		// CREATE RESERVATION AND DISPLAY ID TO USER
 		// TODO JAKE: CREATE createReservation() METHOD IN JDBCReservationDAO
 		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
-		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
+//		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
 		 System.out.println(Display.getReservationMade() + reservation.getId());
 	}
 }
