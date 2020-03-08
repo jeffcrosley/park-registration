@@ -13,47 +13,73 @@ public class Site {
 	public long getId() {
 		return id;
 	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public long getCampgroundId() {
 		return campgroundId;
 	}
+	
 	public void setCampgroundId(long campgroundId) {
 		this.campgroundId = campgroundId;
 	}
+	
 	public long getSite_number() {
 		return site_number;
 	}
+	
 	public void setSite_number(long site_number) {
 		this.site_number = site_number;
 	}
+	
 	public long getMaxOccupancy() {
 		return maxOccupancy;
 	}
+	
 	public void setMaxOccupancy(long maxOccupancy) {
 		this.maxOccupancy = maxOccupancy;
 	}
-	public boolean isAccessible() {
-		return isAccessible;
+	
+	public String isAccessible() {
+		if (isAccessible) {
+			return "Yes";
+		} else {
+			return "No";
+		}
 	}
+	
 	public void setAccessible(boolean isAccessible) {
 		this.isAccessible = isAccessible;
 	}
-	public long getMaxRVLength() {
-		return maxRVLength;
+	
+	public String getMaxRVLength() {
+		if (maxRVLength == 0) {
+			return "N/A";
+		} else {
+			return String.valueOf(maxRVLength);
+		}
 	}
+	
 	public void setMaxRVLength(long maxRVLength) {
 		this.maxRVLength = maxRVLength;
 	}
-	public boolean isHasUtilities() {
-		return hasUtilities;
+	
+	public String isHasUtilities() {
+		if (hasUtilities) {
+			return "Yes";
+		} else {
+			return "N/A";
+		}
 	}
+	
 	public void setHasUtilities(boolean hasUtilities) {
 		this.hasUtilities = hasUtilities;
 	}
 
 	public String toString() {
-		return getId() + "\t" + getMaxOccupancy() + "\t" + isAccessible() + "\t" + getMaxRVLength() + "\t" + isHasUtilities();
+		return "\t" + getSite_number() + "\t\t" + getMaxOccupancy() + "\t\t" + isAccessible() 
+		+ "\t\t" + getMaxRVLength() + "\t" + isHasUtilities();
     }
 }

@@ -75,15 +75,27 @@ public class Campground {
     	String tabsAfterName = "\t";
     	String tabsAfterOpenMonth = "\t";
     	String tabsAfterCloseMonth = "\t";
+    	
     	if (getName().length() < 10) {
     		tabsAfterName += "\t";
     	}
+    	
+    	if (getName().length() < 15) {
+    		tabsAfterName += "\t";
+    	}
+    	
+    	if (getName().length() < 30) {
+    		tabsAfterName += "\t";
+    	}
+    	
     	if (getMonth(getOpenDate()).length() < 8) {
     		tabsAfterOpenMonth += "\t";
     	}
+    	
     	if (getMonth(getCloseDate()).length() < 8) {
     		tabsAfterCloseMonth += "\t";
     	}
-        return getCampgroundId() + "\t" + getName() + tabsAfterName + getMonth(getOpenDate()) + tabsAfterOpenMonth + getMonth(getCloseDate()) + tabsAfterCloseMonth + "$" + getFee().toString() + "0";
+        return "\t" + getCampgroundId() + "\t" + getName() + tabsAfterName + getMonth(getOpenDate()) + 
+        		tabsAfterOpenMonth + getMonth(getCloseDate()) + tabsAfterCloseMonth + String.format("$%.2f", getFee());
     }
 }

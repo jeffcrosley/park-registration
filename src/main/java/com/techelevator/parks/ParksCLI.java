@@ -102,9 +102,8 @@ public class ParksCLI {
 		boolean campgroundMenuLoop = true;
 		do {			
 			// DISPLAY CAMPGROUNDS
-			// TODO FIX THE FORMATTING ON THIS; NEEDS TO WORK FOR ALL PARKS
 			List<Campground> campgrounds = campgroundDAO.getAllCampgrounds(selectedPark);
-			Display.printCampgrounds(campgrounds);
+			Display.printCampgrounds(selectedPark, campgrounds);
 			
 			// GET CAMPGROUND MENU SELECTION
 			String campgroundMenuSelection = (String) menu.getChoiceFromOptions(Display.getCampgroundMenu().toArray());
@@ -120,6 +119,8 @@ public class ParksCLI {
 	private void searchForAvailableReservation(List<Campground> campgrounds) {
 		
 		// GET CAMPGROUND SELECTION
+		System.out.println(Display.getDivider());
+		System.out.println("\t" + Display.getCampgroundsHeader());
 		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
 		
 		// GET ARRIVAL AND DEPARTURES DATES
@@ -127,30 +128,30 @@ public class ParksCLI {
 		LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
 		
 		// CHECK FOR AVAILABLE SITES
-		//	Note: Limit this to 5 (by id ASC)
-		// 	Note: The total cost will have to be derived from the Campground rate and the dates
 		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
 		
 		if (availableSites.size() == 0) {
 			// TODO RE-PROMPT IF THERE ARE NO AVAILABLE SITES; WILL PROBABLY NEED TO WRAP THE ABOVE CODE IN A WHILE LOOP
 		} else {
-			makeReservation(availableSites, arrivalDate, departureDate);
+			makeReservation(selectedCampground, availableSites, arrivalDate, departureDate);
 		}
 	}
 	
-	private void makeReservation(List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
+	private void makeReservation(Campground selectedCampground, List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
 		
 		// GET SITE SELECTION
-		// TODO FIX toString ON Site SO THIS ALL FORMATS CORRECTLY
-		Site selectedSite = (Site) menu.getChoiceFromOptions(availableSites.toArray());
+		System.out.println(Display.getDivider());
+		System.out.println("\t" + Display.getSitesHeader());
+		// TODO FIX TO DISPLAY THE "TOP 5" SITES BY SOME CRITERIA OR OTHER
+		Site selectedSite = (Site) menu.getSiteChoiceFromOptions(selectedCampground, availableSites, arrivalDate, departureDate);
 		
 		// GET RESERVATION NAME
 		String reservationName = menu.getStringFromUserInput(Display.getReservationNamePrompt());
 		
 		// CREATE RESERVATION AND DISPLAY ID TO USER
-		// TODO JAKE: CREATE createReservation() METHOD IN JDBCReservationDAO
-		// 	NOTE: THE RESERVATION CREATION METHOD NEEDS TO INCLUDE THE CREATE DATE
 		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
 		 System.out.println(Display.getReservationMade() + reservation.getId());
+		 
+		 // TODO FIX PROGRAM END BEHAVIOR
 	}
 }

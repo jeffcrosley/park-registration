@@ -10,14 +10,18 @@ import com.techelevator.parks.model.Park;
 
 public class Display {
 
-	private static final String DIVIDER = "------------------------------------------------------------------------------------------------------------------------\n";
+	private static final String DIVIDER = "--------------------------------------------------------------------------------------------------------------\n";
 	
 	private static final String SELECT_PARK_PROMPT = "Select a Park for Further Details\n";
 	private static final String SELECT_COMMAND_PROMPT = "Select a Command\n";
 	
-	private static final String CAMPGROUNDS_HEADER = "\tName\t\tOpen\t\tClose\t\tDaily Fee";
+	private static final String CAMPGROUNDS_HEADER = "\tId\tName\t\t\t\tOpen\t\tClose\t\tDaily Fee";
+	private static final String SITES_HEADER = "\tSite No.\tMax Occup.\tAccessible?\tRV Len\tUtility\tCost";
 	
+
 	private static final String PARK_MENU_1 = "View Campgrounds";
+
+
 	private static final String PARK_MENU_2 = "Search for Reservation";
 	private static final String PARK_MENU_3 = "Return to Previous Screen";
 
@@ -25,8 +29,8 @@ public class Display {
 	private static final String CAMPGROUND_MENU_2 = "Return to Previous Screen";
 
 
-	private static final String ARRIVAL_DATE_PROMPT = "What is the arrival date? _/_/__";
-	private static final String DEPARTURE_DATE_PROMPT = "What is the departure date? _/_/__";
+	private static final String ARRIVAL_DATE_PROMPT = "What is the arrival date? mm/dd/yyyy";
+	private static final String DEPARTURE_DATE_PROMPT = "What is the departure date? mm/dd/yyyy";
 
 	private static final String RESERVATION_NAME_PROMPT = "What name should the reservation be made under?";
 	
@@ -56,6 +60,14 @@ public class Display {
 		return CAMPGROUND_MENU_2;
 	}
 
+	public static String getCampgroundsHeader() {
+		return CAMPGROUNDS_HEADER;
+	}
+
+	public static String getSitesHeader() {
+		return SITES_HEADER;
+	}
+	
 	public static String getArrivalDatePrompt() {
 		return ARRIVAL_DATE_PROMPT;
 	}
@@ -71,7 +83,6 @@ public class Display {
 	public static String getReservationMade() {
 		return RESERVATION_MADE;
 	}
-
 	
 	public static String getSelectParkPrompt() {
 		return SELECT_PARK_PROMPT;
@@ -81,6 +92,7 @@ public class Display {
 		return SELECT_COMMAND_PROMPT;
 }
 
+	
 	private static String formatTextForConsole(String text) {
 		String output = "";
 		final int WORDS_PER_LINE = 10;
@@ -105,7 +117,7 @@ public class Display {
 	}
 	
 	public static void printParkInfo(Park selectedPark) {
-		System.out.println(DIVIDER + "\n");
+		System.out.println(DIVIDER);
         System.out.println(selectedPark.getName() + " National Park");
         System.out.println("Location: \t\t" + selectedPark.getLocation());
         System.out.println("Established: \t\t" + selectedPark.getEstablishedDate());
@@ -115,8 +127,9 @@ public class Display {
         System.out.println(DIVIDER);
     }
 	
-	public static void printCampgrounds(List<Campground> campgrounds) {
+	public static void printCampgrounds(Park selectedPark, List<Campground> campgrounds) {
 		System.out.println(DIVIDER);
+		System.out.println(selectedPark.getName() + " National Park Campgrounds\n");
 		System.out.println(CAMPGROUNDS_HEADER);
 		for (Campground grounds : campgrounds) {
 			System.out.println(grounds);
