@@ -191,6 +191,9 @@ public class JDBCReservationDAOIntegrationTest extends DAOIntegrationTest {
 			Site site3 = newSite(TEST_SITE_3_ID, TEST_CAMPGROUND_2_ID, TEST_SITE_3_NUMBER, TEST_SITE_3_MAX_OCCUPANCY, TEST_SITE_3_IS_ACCESSIBLE, TEST_SITE_3_MAX_RV_LENGTH, TEST_SITE_3_HAS_UTILITIES);
 			Reservation actual = dao.createReservation(site3, TEST_RESERVATION_2_NAME, TEST_RESERVATION_2_FROM_DATE, TEST_RESERVATION_2_TO_DATE);
 			
+			// THIS IS DONE BECAUSE THE IDs ARE CREATED SERIALLY, SO THIS WILL ALLOW THE TEST TO RUN NO MATTER HOW MANY RESERVATIONS ARE MADE
+			expected.setId(actual.getId());
+			
 			assertReservationsAreEqual(expected, actual);
 	
 		}

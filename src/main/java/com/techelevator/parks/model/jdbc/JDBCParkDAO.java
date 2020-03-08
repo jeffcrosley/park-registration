@@ -22,7 +22,7 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Park> getAllParks() {
 
-		String allParks = "SELECT * FROM park ";
+		String allParks = "SELECT * FROM park ORDER BY name ASC";
 		
 		ArrayList<Park> parks = new ArrayList<Park>();
 		
