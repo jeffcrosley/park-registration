@@ -18,9 +18,9 @@ public class JDBCParkDAOIntegrationTest extends DAOIntegrationTest {
 	private static final long TEST_PARK_1_ID = 1000000;
 	private static final long TEST_PARK_2_ID = 2000000;
 	private static final long TEST_PARK_3_ID = 3000000;
-	private static final String TEST_PARK_1_NAME = "Jurassic Park";
-	private static final String TEST_PARK_2_NAME = "Triassic Park";
-	private static final String TEST_PARK_3_NAME = "Cretaceous Park";
+	private static final String TEST_PARK_1_NAME = "Cretaceous Park";
+	private static final String TEST_PARK_2_NAME = "Jurassic Park";
+	private static final String TEST_PARK_3_NAME = "Triassic Park";
 	private static final String TEST_PARK_1_LOCATION = "Isla Nublar";
 	private static final String TEST_PARK_2_LOCATION = "Isla Sorna";
 	private static final String TEST_PARK_3_LOCATION = "South Bend";

@@ -55,7 +55,6 @@ public class Menu {
 		try {
 			output = new SimpleDateFormat(DATE_FORMAT).parse(userInput).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

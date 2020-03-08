@@ -165,7 +165,6 @@ public class ParksCLI {
 		// GET SITE SELECTION
 		System.out.println(Display.getDivider());
 		System.out.println("\t" + Display.getSitesHeader());
-		// TODO FIX TO DISPLAY THE "TOP 5" SITES BY SOME CRITERIA OR OTHER
 		Site selectedSite = (Site) menu.getSiteChoiceFromOptions(selectedCampground, availableSites, arrivalDate, departureDate);
 		
 		// GET RESERVATION NAME
