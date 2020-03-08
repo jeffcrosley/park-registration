@@ -29,6 +29,11 @@ public class ParksCLI {
 	private CampgroundDAO campgroundDAO;
 	private SiteDAO siteDAO;
 	private ReservationDAO reservationDAO;
+
+	 
+	 // TODO FIX CANCELLATION OPTIONS
+	
+	
 	
 	public static void main(String[] args) {
 		BasicDataSource dataSource = new BasicDataSource();
@@ -123,18 +128,29 @@ public class ParksCLI {
 		System.out.println("\t" + Display.getCampgroundsHeader());
 		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
 		
-		// GET ARRIVAL AND DEPARTURES DATES
-		LocalDate arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
-		LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
+		boolean submitDates = true;
+		do {
+			// GET ARRIVAL AND DEPARTURES DATES
+			LocalDate arrivalDate = menu.getDateFromUserInput(Display.getArrivalDatePrompt());
+			LocalDate departureDate = menu.getDateFromUserInput(Display.getDepartureDatePrompt());
+			
+			// CHECK FOR AVAILABLE SITES
+			List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
+			
+			if (availableSites.size() == 0) {
+				String choice = menu.getStringFromUserInput(Display.getResbumitDatesPrompt());
+				if (choice.toUpperCase().equals("N")) {
+					submitDates = false;
+				} else {
+					// TODO FIX THIS TO HANDLE WRONG INPUT
+					// DO NOTHING
+				}
+				
+			} else {
+				makeReservation(selectedCampground, availableSites, arrivalDate, departureDate);
+			}
+		} while (submitDates);
 		
-		// CHECK FOR AVAILABLE SITES
-		List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
-		
-		if (availableSites.size() == 0) {
-			// TODO RE-PROMPT IF THERE ARE NO AVAILABLE SITES; WILL PROBABLY NEED TO WRAP THE ABOVE CODE IN A WHILE LOOP
-		} else {
-			makeReservation(selectedCampground, availableSites, arrivalDate, departureDate);
-		}
 	}
 	
 	private void makeReservation(Campground selectedCampground, List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
@@ -150,8 +166,9 @@ public class ParksCLI {
 		
 		// CREATE RESERVATION AND DISPLAY ID TO USER
 		 Reservation reservation = reservationDAO.createReservation(selectedSite, reservationName, arrivalDate, departureDate);
-		 System.out.println(Display.getReservationMade() + reservation.getId());
+		 System.out.println(Display.getReservationMade() + reservation.getId() + ".");
 		 
-		 // TODO FIX PROGRAM END BEHAVIOR
+		 // END PROGRAM
+		 System.exit(0);
 	}
 }

@@ -76,7 +76,7 @@ public class Menu {
 		String userInput = in.nextLine();
 		try {
 			int selectedOption = Integer.valueOf(userInput);
-			if(selectedOption <= options.length) {
+			if(selectedOption > 0 && selectedOption <= options.length) {
 				choice = options[selectedOption - 1];
 			}
 		} catch(NumberFormatException e) {
@@ -110,7 +110,7 @@ public class Menu {
 			int optionNum = i+1;
 			out.println("\t"+optionNum+") "+options[i]);
 		}
-		out.print("\nPlease choose an option >>> ");
+		out.print("\nPlease choose an option>>> ");
 		out.flush();
 	}
 	
@@ -123,7 +123,7 @@ public class Menu {
 			int optionNum = i+1;
 			out.println("\t" + optionNum + ") " + sites.get(i) + "\t" + String.format("$%.2f", totalCost));
 		}
-		out.print("\nPlease choose an option >>> ");
+		out.print("\nPlease choose an option>>> ");
 		out.flush();
 	}
 }

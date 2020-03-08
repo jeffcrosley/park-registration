@@ -35,18 +35,24 @@ public class JDBCSiteDAO implements SiteDAO {
 	@Override
 	public List<Site> getAvailableSites(Campground selectedCampground, LocalDate desiredArrivalDate, LocalDate desiredDepartureDate) {
 		ArrayList<Site> availSites = new ArrayList<Site>();
-		SqlRowSet rowset = jdbcTemplate.queryForRowSet(sqlFindAvailableSites, selectedCampground.getCampgroundId(), desiredArrivalDate, desiredDepartureDate, desiredArrivalDate, desiredDepartureDate, desiredArrivalDate, desiredDepartureDate);
-		while(rowset.next()) {
-			Site s = new Site();				
-			s.setId(rowset.getLong("site_id"));
-			s.setCampgroundId(rowset.getLong("campground_id"));
-			s.setSite_number(rowset.getLong("site_number"));
-			s.setMaxOccupancy(rowset.getLong("max_occupancy"));
-			s.setAccessible(rowset.getBoolean("accessible"));
-			s.setMaxRVLength(rowset.getLong("max_rv_length"));
-			s.setHasUtilities(rowset.getBoolean("utilities"));
-			availSites.add(s);
-		}
+		
+		// TEST FOR WHETHER THE DEPARTURE DATE IS AFTER THE ARRIVAL DATE
+		int dateCheck = desiredArrivalDate.compareTo(desiredDepartureDate);
+		if (dateCheck < 0) {
+			SqlRowSet rowset = jdbcTemplate.queryForRowSet(sqlFindAvailableSites, selectedCampground.getCampgroundId(), desiredArrivalDate, desiredDepartureDate, desiredArrivalDate, desiredDepartureDate, desiredArrivalDate, desiredDepartureDate);
+			while(rowset.next()) {
+				Site s = new Site();				
+				s.setId(rowset.getLong("site_id"));
+				s.setCampgroundId(rowset.getLong("campground_id"));
+				s.setSite_number(rowset.getLong("site_number"));
+				s.setMaxOccupancy(rowset.getLong("max_occupancy"));
+				s.setAccessible(rowset.getBoolean("accessible"));
+				s.setMaxRVLength(rowset.getLong("max_rv_length"));
+				s.setHasUtilities(rowset.getBoolean("utilities"));
+				availSites.add(s);
+			}
+		}		
+
 		return availSites;
 	}
 }

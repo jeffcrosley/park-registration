@@ -20,17 +20,15 @@ public class Display {
 	
 
 	private static final String PARK_MENU_1 = "View Campgrounds";
-
-
 	private static final String PARK_MENU_2 = "Search for Reservation";
 	private static final String PARK_MENU_3 = "Return to Previous Screen";
 
 	private static final String CAMPGROUND_MENU_1 = "Search for Available Reservations";
 	private static final String CAMPGROUND_MENU_2 = "Return to Previous Screen";
 
-
 	private static final String ARRIVAL_DATE_PROMPT = "What is the arrival date? mm/dd/yyyy";
 	private static final String DEPARTURE_DATE_PROMPT = "What is the departure date? mm/dd/yyyy";
+	private static final String RESBUMIT_DATES_PROMPT = "No sites available for that date range.  Would you like to submit an alternate date range (Y/N)?";
 
 	private static final String RESERVATION_NAME_PROMPT = "What name should the reservation be made under?";
 	
@@ -74,6 +72,10 @@ public class Display {
 
 	public static String getDepartureDatePrompt() {
 		return DEPARTURE_DATE_PROMPT;
+	}
+
+	public static String getResbumitDatesPrompt() {
+		return RESBUMIT_DATES_PROMPT;
 	}
 
 	public static String getReservationNamePrompt() {
