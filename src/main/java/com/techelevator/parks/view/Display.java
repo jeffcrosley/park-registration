@@ -18,6 +18,7 @@ public class Display {
 	private static final String CAMPGROUNDS_HEADER = "\tId\tName\t\t\t\tOpen\t\tClose\t\tDaily Fee";
 	private static final String SITES_HEADER = "\tSite No.\tMax Occup.\tAccessible?\tRV Len\tUtility\tCost";
 	
+	private static final String VALID_YN_INPUT_PROMPT = "Please input 'Y' or 'N'";
 
 	private static final String PARK_MENU_1 = "View Campgrounds";
 	private static final String PARK_MENU_2 = "Search for Reservation";
@@ -64,6 +65,10 @@ public class Display {
 
 	public static String getSitesHeader() {
 		return SITES_HEADER;
+	}
+	
+	public static String getValidYnInputPrompt() {
+		return VALID_YN_INPUT_PROMPT;
 	}
 	
 	public static String getArrivalDatePrompt() {

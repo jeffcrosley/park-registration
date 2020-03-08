@@ -28,12 +28,7 @@ public class ParksCLI {
 	private ParkDAO parkDAO;
 	private CampgroundDAO campgroundDAO;
 	private SiteDAO siteDAO;
-	private ReservationDAO reservationDAO;
-
-	 
-	 // TODO FIX CANCELLATION OPTIONS
-	
-	
+	private ReservationDAO reservationDAO;	
 	
 	public static void main(String[] args) {
 		BasicDataSource dataSource = new BasicDataSource();
@@ -124,9 +119,7 @@ public class ParksCLI {
 	private void searchForAvailableReservation(List<Campground> campgrounds) {
 		
 		// GET CAMPGROUND SELECTION
-		System.out.println(Display.getDivider());
-		System.out.println("\t" + Display.getCampgroundsHeader());
-		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
+		Campground selectedCampground = getCampgroundSelection(campgrounds);
 		
 		boolean submitDates = true;
 		do {
@@ -137,13 +130,20 @@ public class ParksCLI {
 			// CHECK FOR AVAILABLE SITES
 			List<Site> availableSites = siteDAO.getAvailableSites(selectedCampground, arrivalDate, departureDate);
 			
+			// HANDLE INVALID DATE INPUTS
 			if (availableSites.size() == 0) {
-				String choice = menu.getStringFromUserInput(Display.getResbumitDatesPrompt());
-				if (choice.toUpperCase().equals("N")) {
-					submitDates = false;
-				} else {
-					// TODO FIX THIS TO HANDLE WRONG INPUT
-					// DO NOTHING
+				
+				boolean getNewDates = false;
+				while (getNewDates == false) {
+					String choice = menu.getStringFromUserInput(Display.getResbumitDatesPrompt());
+					if (!choice.toUpperCase().equals("Y") && !choice.toUpperCase().equals("N")) {
+						System.out.println(Display.getValidYnInputPrompt());
+					} else if (choice.toUpperCase().equals("N")) {
+						submitDates = false;
+						getNewDates = true;
+					} else {
+						getNewDates = true;
+					} 
 				}
 				
 			} else {
@@ -151,6 +151,13 @@ public class ParksCLI {
 			}
 		} while (submitDates);
 		
+	}
+
+	private Campground getCampgroundSelection(List<Campground> campgrounds) {
+		System.out.println(Display.getDivider());
+		System.out.println("\t" + Display.getCampgroundsHeader());
+		Campground selectedCampground = (Campground) menu.getChoiceFromOptions(campgrounds.toArray());
+		return selectedCampground;
 	}
 	
 	private void makeReservation(Campground selectedCampground, List<Site> availableSites, LocalDate arrivalDate, LocalDate departureDate) {
